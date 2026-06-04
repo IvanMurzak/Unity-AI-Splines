@@ -5,7 +5,8 @@
         "com.IvanMurzak.Unity.MCP.Runtime",
         "com.IvanMurzak.Unity.MCP.Splines.Runtime",
         "Unity.Splines",
-        "Unity.Splines.Editor"
+        "Unity.Splines.Editor",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [
         "Editor"
