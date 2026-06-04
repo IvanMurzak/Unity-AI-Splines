@@ -13,6 +13,8 @@
 
 </div>
 
+<img width="100%" alt="Splines" src="https://github.com/IvanMurzak/Unity-AI-Splines/raw/main/docs/promo/promo-splines.gif"/>
+
 **AI Splines** is an extension for [AI Game Developer (Unity-MCP)](https://github.com/IvanMurzak/Unity-MCP) that exposes [Unity Splines](https://docs.unity3d.com/Packages/com.unity.splines@2.8/manual/index.html) authoring to AI assistants through the [Model Context Protocol](https://modelcontextprotocol.io/introduction). Create and edit splines, knots, and tangents with natural language.
 
 It wraps `com.unity.splines` **2.8.4** and requires Unity **2022.3** or newer.
