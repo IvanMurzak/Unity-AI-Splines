@@ -1,0 +1,23 @@
+"Installer/Assets/com.IvanMurzak/AI Splines Installer/Installer.cs"
+  s_844c06e0e5a07d::t_2b167d0656c47d 22
+Unity-Package/Packages/com.ivanmurzak.unity.mcp.splines/package.json
+  s_844c06e0e5a07d::t_be4068df6b8c3e 18,22
+Unity-Package/Packages/packages-lock.json
+  s_844c06e0e5a07d::t_46d2ad7d513fda 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.12",
+  "base_commit_sha": "b954c5c5cdb7d75e902286b79e19addaeee96e40",
+  "prompts": {},
+  "sessions": {
+    "s_844c06e0e5a07d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "29a3a35c-4ec8-495e-9122-2e4106577dd4",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivan Murzak <Ivan.D.Murzak@gmail.com>"
+    }
+  }
+}
