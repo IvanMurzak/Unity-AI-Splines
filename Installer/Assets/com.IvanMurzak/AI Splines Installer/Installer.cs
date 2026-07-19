@@ -19,7 +19,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Installer
     public static partial class Installer
     {
         public const string PackageId = "com.ivanmurzak.unity.mcp.splines";
-        public const string Version = "1.0.11";
+        public const string Version = "1.0.12";
 
         static Installer()
         {
