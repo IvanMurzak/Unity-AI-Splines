@@ -9,7 +9,7 @@
 */
 
 #nullable enable
-#if UNITY_6000_5_OR_NEWER
+#if !UNITY_6000_5_OR_NEWER
 using System;
 using System.Collections;
 using com.IvanMurzak.ReflectorNet.Model;
@@ -32,8 +32,8 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
 
             var tool = new Tool_Splines();
             var result = tool.GetComponentData(
-                gameObjectRef: new GameObjectRef(go.GetEntityId()),
-                componentRef: new ComponentRef(container.GetEntityId()));
+                gameObjectRef: new GameObjectRef(go.GetInstanceID()),
+                componentRef: new ComponentRef(container.GetInstanceID()));
 
             Assert.IsNotNull(result, "Result should not be null");
             Assert.IsNotNull(result.data, "Serialized data should not be null");
@@ -48,7 +48,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var go = CreateGameObjectWithSplineContainer(GO_ContainerName);
 
             var tool = new Tool_Splines();
-            var result = tool.GetComponentData(new GameObjectRef(go.GetEntityId()));
+            var result = tool.GetComponentData(new GameObjectRef(go.GetInstanceID()));
 
             Assert.IsNotNull(result.data, "Should serialize the first Splines component");
             StringAssert.Contains("Splines", result.componentType, "Resolved component should be a Splines type");
@@ -80,9 +80,9 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
 
             var tool = new Tool_Splines();
             var result = tool.ModifyComponent(
-                gameObjectRef: new GameObjectRef(go.GetEntityId()),
+                gameObjectRef: new GameObjectRef(go.GetInstanceID()),
                 data: diff,
-                componentRef: new ComponentRef(extrude.GetEntityId()));
+                componentRef: new ComponentRef(extrude.GetInstanceID()));
 
             Assert.IsTrue(result.success, "Modification should succeed");
             Assert.AreEqual(newSides, extrude.Sides, "m_Sides should be modified via the fields channel");
@@ -97,8 +97,8 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var extrude = go.AddComponent<SplineExtrude>();
 
             var json = $@"{{
-                ""gameObjectRef"": {{ ""instanceID"": {go.GetEntityId()} }},
-                ""componentRef"": {{ ""instanceID"": {extrude.GetEntityId()} }},
+                ""gameObjectRef"": {{ ""instanceID"": {go.GetInstanceID()} }},
+                ""componentRef"": {{ ""instanceID"": {extrude.GetInstanceID()} }},
                 ""data"": {{
                     ""typeName"": ""UnityEngine.Splines.SplineExtrude"",
                     ""fields"": [

@@ -9,7 +9,7 @@
 */
 
 #nullable enable
-#if UNITY_6000_5_OR_NEWER
+#if !UNITY_6000_5_OR_NEWER
 using System.Collections;
 using AIGD;
 using com.IvanMurzak.Unity.MCP.Editor.API;
@@ -46,8 +46,8 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var go = CreateGameObjectWithSplineContainer(GO_ContainerName);
 
             var tool = new Tool_Splines();
-            var r0 = tool.AddKnot(new GameObjectRef(go.GetEntityId()), position: new Vector3(0, 0, 0));
-            var r1 = tool.AddKnot(new GameObjectRef(go.GetEntityId()), position: new Vector3(5, 0, 0));
+            var r0 = tool.AddKnot(new GameObjectRef(go.GetInstanceID()), position: new Vector3(0, 0, 0));
+            var r1 = tool.AddKnot(new GameObjectRef(go.GetInstanceID()), position: new Vector3(5, 0, 0));
 
             Assert.IsTrue(r0.success && r1.success, "Both AddKnot calls should succeed");
             Assert.AreEqual(0, r0.knotIndex, "First knot should be index 0");
@@ -64,12 +64,12 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var spline = go.GetComponent<SplineContainer>().Spline;
 
             var tool = new Tool_Splines();
-            var ins = tool.InsertKnot(new GameObjectRef(go.GetEntityId()), knotIndex: 1, position: new Vector3(2, 2, 2));
+            var ins = tool.InsertKnot(new GameObjectRef(go.GetInstanceID()), knotIndex: 1, position: new Vector3(2, 2, 2));
             Assert.IsTrue(ins.success, "Insert should succeed");
             Assert.AreEqual(3, spline.Count, "Spline should have 3 knots after insert");
             Assert.AreEqual(new Vector3(2, 2, 2), (Vector3)spline[1].Position, "Inserted knot should be at index 1");
 
-            var rem = tool.RemoveKnot(new GameObjectRef(go.GetEntityId()), knotIndex: 1);
+            var rem = tool.RemoveKnot(new GameObjectRef(go.GetInstanceID()), knotIndex: 1);
             Assert.IsTrue(rem.success, "Remove should succeed");
             Assert.AreEqual(2, spline.Count, "Spline should have 2 knots after remove");
 
@@ -83,7 +83,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var spline = go.GetComponent<SplineContainer>().Spline;
 
             var tool = new Tool_Splines();
-            var r = tool.SetKnot(new GameObjectRef(go.GetEntityId()), knotIndex: 0,
+            var r = tool.SetKnot(new GameObjectRef(go.GetInstanceID()), knotIndex: 0,
                 position: new Vector3(9, 8, 7), tangentOut: new Vector3(0, 0, 2));
 
             Assert.IsTrue(r.success, "SetKnot should succeed");
@@ -100,7 +100,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var spline = go.GetComponent<SplineContainer>().Spline;
 
             var tool = new Tool_Splines();
-            var r = tool.SetTangentMode(new GameObjectRef(go.GetEntityId()), knotIndex: 0, tangentMode: "Linear");
+            var r = tool.SetTangentMode(new GameObjectRef(go.GetInstanceID()), knotIndex: 0, tangentMode: "Linear");
 
             Assert.IsTrue(r.success, "SetTangentMode should succeed");
             Assert.AreEqual(TangentMode.Linear, spline.GetTangentMode(0), "Tangent mode should be Linear");
@@ -115,7 +115,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var spline = go.GetComponent<SplineContainer>().Spline;
 
             var tool = new Tool_Splines();
-            var r = tool.SetClosed(new GameObjectRef(go.GetEntityId()), closed: true);
+            var r = tool.SetClosed(new GameObjectRef(go.GetInstanceID()), closed: true);
 
             Assert.IsTrue(r.success, "SetClosed should succeed");
             Assert.IsTrue(spline.Closed, "Spline should be closed");
@@ -130,7 +130,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var go = CreateGameObjectWithSplineContainer(GO_ContainerName);
 
             var tool = new Tool_Splines();
-            var r = tool.AddSpline(new GameObjectRef(go.GetEntityId()), closed: true);
+            var r = tool.AddSpline(new GameObjectRef(go.GetInstanceID()), closed: true);
 
             Assert.IsTrue(r.success, "AddSpline should succeed");
             Assert.AreEqual(1, r.splineIndex, "Second spline should be index 1");
@@ -146,7 +146,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             // knots at (0,0,0) and (1,0,0); evaluate at t=0.5 should land near the middle.
 
             var tool = new Tool_Splines();
-            var r = tool.Evaluate(new GameObjectRef(go.GetEntityId()), t: 0.5f);
+            var r = tool.Evaluate(new GameObjectRef(go.GetInstanceID()), t: 0.5f);
 
             Assert.AreEqual(0.5f, r.t, "t should be echoed back");
             Assert.Greater(r.localPosition.x, 0f, "Midpoint should advance along +X");
@@ -161,7 +161,7 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var go = CreateGameObjectWithKnots(3, GO_ContainerName);
 
             var tool = new Tool_Splines();
-            var r = tool.GetKnots(new GameObjectRef(go.GetEntityId()));
+            var r = tool.GetKnots(new GameObjectRef(go.GetInstanceID()));
 
             Assert.AreEqual(3, r.knotCount, "Should report 3 knots");
             Assert.AreEqual(3, r.knots.Length, "Should return 3 knot summaries");
