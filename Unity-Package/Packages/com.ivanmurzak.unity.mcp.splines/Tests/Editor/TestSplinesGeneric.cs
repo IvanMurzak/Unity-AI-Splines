@@ -97,8 +97,8 @@ namespace com.IvanMurzak.Unity.MCP.Splines.Editor.Tests
             var extrude = go.AddComponent<SplineExtrude>();
 
             var json = $@"{{
-                ""gameObjectRef"": {{ ""instanceID"": {go.GetEntityId()} }},
-                ""componentRef"": {{ ""instanceID"": {extrude.GetEntityId()} }},
+                ""gameObjectRef"": {{ ""instanceID"": ""{UnityEngine.EntityId.ToULong(go.GetEntityId())}"" }},
+                ""componentRef"": {{ ""instanceID"": ""{UnityEngine.EntityId.ToULong(extrude.GetEntityId())}"" }},
                 ""data"": {{
                     ""typeName"": ""UnityEngine.Splines.SplineExtrude"",
                     ""fields"": [
