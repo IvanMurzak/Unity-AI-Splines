@@ -1,0 +1,55 @@
+Unity-Package/Assets/root/Editor/Scripts/com.IvanMurzak.Unity.MCP.Splines.Editor.asmdef
+  s_6908d424636975::t_87546a92973c5c 8-9
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.ContainerCreate.pre-Unity.6.5.cs
+  s_6908d424636975::t_8e4bc95e5787b4 1-73,76-116
+  s_6908d424636975::t_bc1f54ac3c1b9f 74-75
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.Helpers.cs
+  s_6908d424636975::t_7709b9f369f528 1-114
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.InsertKnot.cs
+  s_6908d424636975::t_75d00da52cd865 1-97
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.RemoveKnot.cs
+  s_6908d424636975::t_591e109dc95c96 1-85
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.Evaluate.cs
+  s_6908d424636975::t_bff636bc9e9b62 1-118
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.SetClosed.cs
+  s_6908d424636975::t_9b3d4424e14644 1-100
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.ContainerCreate.cs
+  s_6908d424636975::t_e8400e01ae4cf2 74-75
+  s_6908d424636975::t_ff28624cc0e3f2 1-73,76-116
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.GetKnots.cs
+  s_6908d424636975::t_702cdffaf6f599 1-99
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.Get.cs
+  s_6908d424636975::t_5cd87574449aad 1-140
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.SetKnot.cs
+  s_6908d424636975::t_6ac72a66397c72 1-102
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.List.cs
+  s_6908d424636975::t_59db3bacb5685e 1-136
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.AddKnot.cs
+  s_6908d424636975::t_ae9f5c9341fd22 1-117
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.cs
+  s_6908d424636975::t_7fa2be018a5fdf 1-44
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.AddSpline.cs
+  s_6908d424636975::t_2d7bdcb0213c00 13
+  s_6908d424636975::t_0fecd0297301c9 61-65
+  s_6908d424636975::t_1b28efdb44e389 1-12,14-60,66-103
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.SetTangentMode.cs
+  s_6908d424636975::t_bd2ae628ee2e0e 1-93
+Unity-Package/Assets/root/Editor/Scripts/Tools/Splines.Modify.cs
+  s_6908d424636975::t_7ea2fdac10487f 1-133
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "86962453fceb977f8380dae8a36a6627701ea894",
+  "prompts": {},
+  "sessions": {
+    "s_6908d424636975": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "383d28d1-a361-40a7-9656-23c1b29d7a19",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivan Murzak <Ivan.D.Murzak@gmail.com>"
+    }
+  }
+}
