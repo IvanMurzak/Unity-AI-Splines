@@ -10,10 +10,8 @@
 
 #nullable enable
 using System.Collections.Generic;
-using System.Linq;
 using Rql;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -30,8 +28,16 @@ namespace com.IvanMurzak.Unity.MCP.Editor.Rql.Splines
         public static readonly SplinesApi Instance = new SplinesApi();
 
         [RqlDescription("every SplineContainer in the loaded scenes, inactive ones included")]
-        public List<SplineContainer> containers =>
-            RqlUnity.AllGameObjects().SelectMany(go => go.GetComponents<SplineContainer>()).Where(c => c != null).ToList();
+        public List<SplineContainer> containers
+        {
+            get
+            {
+                // One native call per root (depth-first, inactive included) instead of one GetComponents per GameObject.
+                var result = new List<SplineContainer>();
+                foreach (var root in RqlUnity.RootGameObjects()) result.AddRange(root.GetComponentsInChildren<SplineContainer>(true));
+                return result;
+            }
+        }
 
         [RqlCallable("create a GameObject with a SplineContainer holding one empty spline (optionally under a parent, at a local " +
                      "position / rotation, as a closed loop) and return the container; then call AddKnot / AddKnots on it")]
@@ -46,7 +52,7 @@ namespace com.IvanMurzak.Unity.MCP.Editor.Rql.Splines
             var container = go.AddComponent<SplineContainer>();
             container.Spline.Closed = closed;
             Undo.RegisterCreatedObjectUndo(go, "RQL create spline " + go.name);
-            if (!EditorApplication.isPlaying && go.scene.IsValid()) EditorSceneManager.MarkSceneDirty(go.scene);
+            SplineEdit.Dirty(container);
             return container;
         }
     }

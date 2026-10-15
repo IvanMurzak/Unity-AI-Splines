@@ -32,7 +32,7 @@ Or add it through the Unity-MCP plugin window's **Extensions** list.
 
 ## RQL (no extension tools)
 
-On the RQL branch of Unity-MCP this package adds no MCP tools: it contributes an RQL module, so agents use
+Since Unity-MCP 1.0.0 this package adds no MCP tools: it contributes an RQL module, so agents use
 `rql-query` / `rql-mutate` (the `unity-rql` skill carries the full guide with examples).
 
 | Former tool | RQL |

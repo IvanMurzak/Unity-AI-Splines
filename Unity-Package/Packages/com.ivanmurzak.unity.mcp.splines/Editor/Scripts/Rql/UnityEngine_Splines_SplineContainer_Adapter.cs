@@ -12,6 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using com.IvanMurzak.Unity.MCP.Editor.Rql.Adapters;
 using Rql.Execution;
 using Unity.Mathematics;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace com.IvanMurzak.Unity.MCP.Editor.Rql.Splines
         protected override void Members(MemberTable<SplineContainer> m)
         {
             var t = m.Untyped;
-            t.Hide(Raw.Where(t.Contains).ToArray());
+            t.HideExisting(Raw);
             m.Add("splines", c => SplineView.All(c), description: "the container's splines (views with writable closed and knots)");
 
             Add(t, "AddSpline", typeof(int), "append an empty spline; returns its index",

@@ -1,7 +1,7 @@
 # AGENTS.md — Unity-AI-Splines
 
 Unity package `com.ivanmurzak.unity.mcp.splines` — makes **Unity Splines** (`com.unity.splines`) available to
-Unity-MCP's RQL tools (`rql-query` / `rql-mutate`; branch `experiment/rql`, no extension MCP tools): the `splines`
+Unity-MCP's RQL tools (`rql-query` / `rql-mutate`; no extension MCP tools): the `splines`
 source (containers, `CreateContainer`), SplineContainer methods (add / insert / remove knots and splines,
 evaluate), writable `splines[i].knots[j]` views (position, tangents, rotation, tangent mode, closed), and
 Unity.Mathematics literals. An extension of
