@@ -28,23 +28,20 @@ openupm add com.ivanmurzak.unity.mcp.splines
 
 Or add it through the Unity-MCP plugin window's **Extensions** list.
 
-## Tools
+## RQL (no extension tools)
 
-| Tool id | Description |
+Since Unity-MCP 1.0.0 this package adds no MCP tools: it contributes an RQL module, so agents use
+`rql-query` / `rql-mutate` (the `unity-rql` skill carries the full guide with examples).
+
+| Former tool | RQL |
 | --- | --- |
-| `splines-container-create` | Create a GameObject with a `SplineContainer` (one empty spline) |
-| `splines-add-spline` | Add another empty spline to a container |
-| `splines-add-knot` | Append a knot to a spline |
-| `splines-insert-knot` | Insert a knot at an index |
-| `splines-remove-knot` | Remove a knot at an index |
-| `splines-set-knot` | Set position / tangents / rotation of a knot |
-| `splines-set-tangent-mode` | Set a knot's tangent mode (Linear/Continuous/Broken/AutoSmooth/Mirrored) |
-| `splines-set-closed` | Toggle a spline's closed-loop flag |
-| `splines-evaluate` | Evaluate position / tangent / up at normalized `t` |
-| `splines-list` | List all `SplineContainer`s in the scene |
-| `splines-get-knots` | Read all knots of a spline |
-| `splines-get` | Generic: serialize any Splines component via ReflectorNet |
-| `splines-modify` | Generic: apply a `SerializedMember` diff to any Splines component |
+| `splines-container-create` | `splines \| call CreateContainer("Road", "(0, 0, 5)", "(0, 90, 0)", true)` |
+| `splines-add-spline` | `… \| where $ is SplineContainer \| call AddSpline()` (`RemoveSpline(i)`) |
+| `splines-add-knot` / `-insert-knot` / `-remove-knot` | `call AddKnot("(1, 0, 2)")`, `AddKnots([...])`, `InsertKnot(1, "(2, 0, 1)")`, `RemoveKnot(0)` (optional leading spline index) |
+| `splines-set-knot` / `-set-tangent-mode` | `set splines[0].knots[2].position = "(10, 1, 0)"`, `set splines[0].knots[0].tangentMode = "Linear"` |
+| `splines-set-closed` | `set splines[0].closed = true` |
+| `splines-evaluate` | `call Evaluate(0.5)` (or `Evaluate(splineIndex, t)`) |
+| `splines-list` / `-get-knots` / `-get` / `-modify` | `splines \| get containers`, `… \| get splines \| get knots \| select index position tangentMode`, plain `select` / `set` |
 
 ## License
 

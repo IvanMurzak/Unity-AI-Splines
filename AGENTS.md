@@ -1,9 +1,10 @@
 # AGENTS.md — Unity-AI-Splines
 
-Unity package `com.ivanmurzak.unity.mcp.splines` — wraps **Unity Splines** (`com.unity.splines`) as
-`splines-*` MCP tools: create `SplineContainer`s, add/insert/remove knots, set knot position / tangents /
-rotation and tangent modes, toggle closed loops, evaluate points and tangents, add splines, list/get spline
-components, and modify arbitrary spline component fields. An extension of
+Unity package `com.ivanmurzak.unity.mcp.splines` — makes **Unity Splines** (`com.unity.splines`) available to
+Unity-MCP's RQL tools (`rql-query` / `rql-mutate`; no extension MCP tools): the `splines`
+source (containers, `CreateContainer`), SplineContainer methods (add / insert / remove knots and splines,
+evaluate), writable `splines[i].knots[j]` views (position, tangents, rotation, tangent mode, closed), and
+Unity.Mathematics literals. An extension of
 [AI Game Developer](https://github.com/IvanMurzak/Unity-MCP) (`com.ivanmurzak.unity.mcp`), generated from
 `Unity-AI-Tools-Template`; the user-facing tool list is in `README.md`.
 
@@ -12,9 +13,11 @@ components, and modify arbitrary spline component fields. An extension of
 - `Unity-Package/` — Unity project hosting the package; only `Packages/com.ivanmurzak.unity.mcp.splines/`
   ships.
   - `package.json` — the version source of truth and the dependency pins.
-  - `Editor/Scripts/Tools/` — the MCP tools (`Tool_Splines`); new tools go here.
+  - `Editor/Scripts/Rql/` — the RQL module (`SplinesModule`: source, adapters, guide), one adapter per file
+    (`<Namespace_Type>_Adapter.cs`), the `SplinesApi` source object and the `SplineView` / `KnotView` views.
   - `Runtime/` — runtime assembly (currently empty).
-  - `Tests/Editor/` (EditMode, `BaseTest` + one file per tool group) and `Tests/Runtime/` (PlayMode).
+  - `Tests/Editor/Rql/` (EditMode, `SplinesTestBase` + one file per adapter / view / source) and
+    `Tests/Runtime/` (PlayMode).
 - `Unity-Tests/<unity-version>/` — one test project per supported Unity version, consuming the package via
   `file:`. A new version must also be added to `test_pull_request.yml` and `release.yml` (and
   `open-all-projects-*`).
@@ -44,23 +47,11 @@ maintainer-applied `ci-ok` label and abort if the PR touches `.github/workflows/
 
 ## Critical invariants
 
-- **Main thread only.** Every Unity API call inside a tool MUST be wrapped in
-  `MainThread.Instance.Run(() => { ... })` — MCP calls arrive off the main thread; only argument validation
-  runs outside. So must ReflectorNet calls (`reflector.Serialize`, `TryModify`).
-- **Tool shape.** One `[AiToolType] partial class Tool_Splines`, split one operation per file
-  (`Splines.ContainerCreate.cs`, `Splines.AddKnot.cs`, `Splines.Modify.cs`, …). Each tool method carries
-  `[AiTool(<id>, Title=…, …Hint=…)]`, `[AiSkillDescription]` / `[AiSkillBody]` and `[Description]` (all
-  LLM-facing); tool IDs are `public const string …ToolId = "splines-…"`. Every `[AiTool]` method declares at
-  least one parameter. Shared helpers (`ResolveSplineContainer`, `ResolveSpline`, `BuildKnot`,
-  `MarkDirtyAndRepaint`) live in `Splines.Helpers.cs`; error strings in `Tool_Splines.Error` (`Splines.cs`).
-- **EntityId split.** Unity 6.5+ returns `UnityEngine.EntityId` from `GameObject.GetEntityId()`; pre-6.5
-  returns `int` from `GetInstanceID()`. Files surfacing an instance ID ship as a `*.cs`
-  (`#if UNITY_6000_5_OR_NEWER`) + `*.pre-Unity.6.5.cs` (`#if !UNITY_6000_5_OR_NEWER`) pair — e.g.
-  `Splines.ContainerCreate.cs` / `Splines.ContainerCreate.pre-Unity.6.5.cs`. Keep both variants in sync.
-- **Generic modify via ReflectorNet.** `splines-modify` applies a `SerializedMember` diff through
-  `reflector.TryModify(ref boxed, data, …)`. The `fields` channel resolves `FieldInfo` and `props` resolves
-  `PropertyInfo`, with **no cross-fallback**: a public field MUST go in `fields`, a property in `props`
-  (otherwise: `Property '…' not found or not writable`).
+- **RQL surface.** Everything is registered by `SplinesModule` (`IRqlModule`, Order 100, found through
+  TypeCache) and documented in its `AddGuide("Splines", …)` text, which is rendered into the `unity-rql` skill:
+  keep the guide examples runnable (`SplinesModuleTests.EveryGuideExampleRuns` executes them in order).
+- **Undo.** Calls on a SplineContainer are recorded by the engine (the container is the owner). Writes through
+  `SplineView` / `KnotView` have a plain owner, so their setters record the container themselves (`SplineEdit`).
 - **Spline data model.** A `SplineContainer` holds one or more `Spline`s; each `Spline` is a list of
   `BezierKnot`s (Position, TangentIn, TangentOut, Rotation) plus a `Closed` flag and per-knot `TangentMode`.
   Edit knots through `Spline`'s `Add` / `Insert` / `RemoveAt` / `SetTangentMode` and the indexer, never by raw
